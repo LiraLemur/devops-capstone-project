@@ -24,6 +24,7 @@ HTTPS_ENVIRON = {'wsgi.url_scheme': 'https'}
 ######################################################################
 #  T E S T   C A S E S
 ######################################################################
+
 class TestAccountService(TestCase):
     """Account Service Tests"""
 
@@ -151,7 +152,7 @@ class TestAccountService(TestCase):
             content_type="application/json"
         )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        
+
         new_account = response.get_json()
         new_account["name"] = "John Doe"
         response = self.client.put(f"{BASE_URL}/{new_account['id']}", json=new_account)
@@ -172,7 +173,7 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(len(data), 5)
-    
+
     def test_method_not_allowed(self):
         """Tests for illegal method call"""
         response = self.client.delete(BASE_URL)
@@ -196,15 +197,4 @@ class TestAccountService(TestCase):
         response = self.client.get('/', environ_overrides=HTTPS_ENVIRON)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.headers.get('Access-Control-Allow-Origin'), '*')
-
-
-
-
-          
-
-            
-
-
-
-
-
+        
